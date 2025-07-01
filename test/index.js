@@ -58,7 +58,7 @@ const fields = () => {
   deepStrictEqual(ee["33"], 3);
   deepStrictEqual(ee.true, 4);
   deepStrictEqual(ee.false, 5);
-}
+};
 
-for (const test of [from, of, toString, 
+for (const test of [from, of, toString,
   Iterator, length, fields]) test();
