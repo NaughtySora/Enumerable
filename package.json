@@ -1,0 +1,33 @@
+{
+  "name": "enumerable",
+  "version": "0.1.0",
+  "author": "NaughtySora <naughtysora@proton.me>",
+  "license": "MIT",
+  "description": "enumerable data type",
+  "main": "main.js",
+  "types": "main.d.ts",
+  "readmeFilename": "README.md",
+  "keywords": [
+    "enumerable",
+    "data type"
+  ],
+  "files": [
+    "lib/",
+    "main.d.ts"
+  ],
+  "scripts": {
+    "test": "node ./test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NaughtySora/Enumerable"
+  },
+  "bugs": {
+    "url": "https://github.com/NaughtySora/Enumerable/issues",
+    "email": "naughtysora@proton.me"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "typescript": "^5.8.3"
+  }
+}
