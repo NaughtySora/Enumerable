@@ -1,10 +1,25 @@
 "use strict";
 
-const { deepEqual, equal } = require("node:assert/strict");
+const { deepEqual, equal, match } = require("node:assert/strict");
 const { describe, it } = require("node:test");
-const Enumerable = require("../lib/index.js");
+const { Enumerable } = require("../main");
 
 describe('Enumerable', () => {
+
+  it('validation', () => {
+    try {
+      new Enumerable([true]);
+    } catch (e) {
+      match(e.message, /Enum value has to be string/);
+    }
+
+    try {
+      new Enumerable(["toString"]);
+    } catch (e) {
+      match(e.message, /key toString is already exists/);
+    }
+  });
+
   it('iterator', () => {
     const expected = ["test-0", "test-1"];
     const ee = new Enumerable(expected);
@@ -32,7 +47,7 @@ describe('Enumerable', () => {
     const expected = ["test-0", "test-1"];
     const e = Enumerable.of("test", "value");
     const ee = new Enumerable(expected);
-    const eee = Enumerable.from({ length: 2 }, (_, index) => `${index}-${index}`);
+    const eee = Enumerable.from({ length: 2 }, (_, idx) => `${idx}`);
     equal(expected.length, e.length);
     equal(expected.length, ee.length);
     equal(expected.length, eee.length);
