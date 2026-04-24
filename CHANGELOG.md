@@ -4,3 +4,11 @@
 
 - init
 - tests
+
+
+## [0.1.1] - 2026-04-24
+
+- better tests, coverage
+- update deps
+- refactor
+- types
