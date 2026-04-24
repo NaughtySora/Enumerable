@@ -11,3 +11,4 @@
 - better tests, coverage
 - update deps
 - refactor
+- types
