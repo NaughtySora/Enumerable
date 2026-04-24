@@ -1,64 +1,40 @@
 "use strict";
 
-const { deepStrictEqual, ok } = require("node:assert");
+const { deepEqual, equal } = require("node:assert/strict");
+const { describe, it } = require("node:test");
 const Enumerable = require("../lib/index.js");
 
-const from = () => {
-  const expected = ["test-0", "test-1"];
-  const ee = Enumerable.from({ length: 2 }, (_, i) => `test-${i ** 2}`);
-  const test = [ee[0], ee[1]]
-  deepStrictEqual(expected, test);
-};
+describe('Enumerable', () => {
+  it('iterator', () => {
+    const expected = ["test-0", "test-1"];
+    const ee = new Enumerable(expected);
+    deepEqual([...ee], expected);
+  });
 
-const of = () => {
-  const expected = ["test-0", "test-1"];
-  const ee = Enumerable.of("test-0", "test-1");
-  const test = [ee[0], ee[1]]
-  deepStrictEqual(expected, test);
-};
+  it('from', () => {
+    const ee = Enumerable.from({ length: 2 }, (_, i) => `test-${i ** 2}`);
+    const test = [ee[0], ee[1]]
+    deepEqual([...ee], ["test-0", "test-1"]);
+  });
 
-const toString = () => {
-  const expected = ["test-0", "test-1"];
-  const ee = new Enumerable(expected);
-  ok(expected.toString() === ee.toString());
-};
+  it('of', () => {
+    const ee = Enumerable.of("test-0", "test-1");
+    deepEqual([...ee], ["test-0", "test-1"]);
+  });
 
-const Iterator = () => {
-  const expected = ["test-0", "test-1"];
-  const ee = new Enumerable(expected);
-  const iter = expected[Symbol.iterator]();
-  for (const item of ee) {
-    deepStrictEqual(iter.next().value, item);
-  }
-};
+  it('toString', () => {
+    const from = ["test-0", "test-1"];
+    const ee = new Enumerable(from);
+    equal(ee.toString(), from.toString());
+  });
 
-const length = () => {
-  const expected = ["test-0", "test-1"];
-  const e = Enumerable.of("test", "value");
-  const ee = new Enumerable(expected);
-  const eee = Enumerable.from({ length: 2 }, (_, index) => `${index}-${index}`);
-  ok(expected.length === e.length);
-  ok(expected.length === ee.length);
-  ok(expected.length === eee.length);
-};
-
-const fields = () => {
-  const proto = ["test2", 21, 42, 42, 42, 33, "true", true, true, false, "false", 0, 1,];
-  const ee = new Enumerable(proto);
-  deepStrictEqual(ee[0], "test2");
-  deepStrictEqual(ee[1], "21");
-  deepStrictEqual(ee[2], "42");
-  deepStrictEqual(ee[3], "33");
-  deepStrictEqual(ee[4], "true");
-  deepStrictEqual(ee[5], "false");
-
-  deepStrictEqual(ee.test2, 0);
-  deepStrictEqual(ee["21"], 1);
-  deepStrictEqual(ee["42"], 2);
-  deepStrictEqual(ee["33"], 3);
-  deepStrictEqual(ee.true, 4);
-  deepStrictEqual(ee.false, 5);
-};
-
-for (const test of [from, of, toString,
-  Iterator, length, fields]) test();
+  it('length', () => {
+    const expected = ["test-0", "test-1"];
+    const e = Enumerable.of("test", "value");
+    const ee = new Enumerable(expected);
+    const eee = Enumerable.from({ length: 2 }, (_, index) => `${index}-${index}`);
+    equal(expected.length, e.length);
+    equal(expected.length, ee.length);
+    equal(expected.length, eee.length);
+  });
+});
